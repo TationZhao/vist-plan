@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 杭州新春祈福·家庭三日游</title>
+    <style>
+        :root {
+            --primary-color: #B83B3B; /* 故宫红/春节红 */
+            --secondary-color: #2F6F68; /* 西湖绿 */
+            --bg-color: #F9F7F2; /* 米纸色 */
+            --text-color: #333;
+            --light-text: #666;
+            --card-bg: #fff;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        /* 标题部分 */
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* 行程卡片 */
+        .day-section {
+            margin-bottom: 40px;
+            page-break-inside: avoid; /* 打印时防止卡片被切断 */
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .day-tag {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .day-title {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .timeline {
+            border-left: 2px solid #eee;
+            margin-left: 10px;
+            padding-left: 20px;
+        }
+
+        .event {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .event::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            position: absolute;
+            left: -26px;
+            top: 8px;
+        }
+
+        .event-time {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .event-detail {
+            margin-top: 5px;
+        }
+
+        /* 图片占位符样式 */
+        .image-placeholder {
+            background-color: #f0f2f5;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            color: #777;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            border-color: var(--secondary-color);
+            background-color: #eef5f4;
+        }
+
+        .prompt-label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        .prompt-text {
+            font-family: monospace;
+            background: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            display: block;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* 真实的图片样式 (替换后用这个类) */
+        .real-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 底部贴士 */
+        .tips-section {
+            background: #FFF8F0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #FF9F43;
+            margin-top: 40px;
+            page-break-before: auto;
+        }
+
+        .tips-title {
+            font-weight: bold;
+            color: #E67E22;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* 打印控制 */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; padding: 0 20px; }
+            .no-print { display: none; }
+            a { text-decoration: none; color: black; }
+        }
+
+        /* 按钮 */
+        .action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 100;
+        }
+        .action-btn:hover { background: #24554F; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🏮 2026 新春杭州·祈福之旅</h1>
+        <div class="subtitle">带爸妈游杭城 · 慢节奏 · 享美食</div>
+        <div class="meta-info">
+            <span>📅 日期：2026年2月中旬</span>
+            <span>📍 地点：杭州 (萧山/西湖/灵隐)</span>
+            <span>👨‍👩‍👧‍👦 人数：4人家庭</span>
+        </div>
+    </header>
+
+    <section class="day-section">
+        <div class="day-header">
+            <span class="day-tag">第一天</span>
+            <span class="day-title">灵隐礼佛 & 登高祈福</span>
+        </div>
+        <div class="timeline">
+            <div class="event">
+                <div class="event-time">08:30 - 北高峰财神庙</div>
+                <div class="event-detail">登顶“天下第一财神庙”，俯瞰杭州全景，祈求新年财运亨通。</div>
+                <img src="pic01.jpg" class="real-image">
+            </div>
+
+            <div class="event">
+                <div class="event-time">11:00 - 灵隐寺吃素面</div>
+                <div class="event-detail">在“十方苑”品尝著名的素面（罗汉面/吉祥面），感受古刹清幽。</div>    
+                <img src="pic02.jpg" class="real-image">
+            </div>
+
+            <div class="event">
+                <div class="event-time">14:00 - 飞来峰 & 永福寺</div>
+                <div class="event-detail">漫步飞来峰石窟造像，前往更清静的“钱塘第一福地”永福寺喝茶。</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="day-section">
+        <div class="day-header">
+            <span class="day-tag">第二天</span>
+            <span class="day-title">西湖经典 & 吴山寻味</span>
+        </div>
+        <div class="timeline">
+            <div class="event">
+                <div class="event-time">09:30 - 断桥 & 白堤</div>
+                <div class="event-detail">漫步许仙白娘子相会之地，在这个季节或许能看到残雪或早梅。</div>
+                <img src="pic03.jpg" class="real-image">
+            </div>
+
+            <div class="event">
+                <div class="event-time">11:00 - 泛舟湖上 (三潭印月)</div>
+                <div class="event-detail">乘坐游船前往湖心岛，打卡一元人民币背景图。</div>
+            </div>
+
+            <div class="event">
+                <div class="event-time">16:00 - 雷峰夕照 & 柳浪闻莺</div>
+                <div class="event-detail">登雷峰塔电梯看西湖全景，随后沿南山路步行至吴山广场区域。</div>
+                <img src="pic04.jpg" class="real-image">
+            </div>
+            
+            <div class="event">
+                <div class="event-time">18:30 - 吴山/河坊街晚餐</div>
+                <div class="event-detail">寻找巷子里的地道杭帮菜（米其林/必比登推荐小馆）。</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="day-section">
+        <div class="day-header">
+            <span class="day-tag">第三天</span>
+            <span class="day-title">湘湖慢游 & 城市夜景</span>
+        </div>
+        <div class="timeline">
+            <div class="event">
+                <div class="event-time">10:00 - 湘湖摇橹船</div>
+                <div class="event-detail">家门口的“西湖”，人少景美，坐船体验跨湖桥文化。</div>
+                <img src="pic05.jpg" class="real-image">
+            </div>
+
+            <div class="event">
+                <div class="event-time">19:00 - 钱江新城灯光秀</div>
+                <div class="event-detail">在钱江世纪公园看对岸灯光秀，感受杭州的现代繁华。</div>
+                <img src="pic06.jpg" class="real-image">
+            </div>
+        </div>
+    </section>
+
+    <div class="tips-section">
+        <span class="tips-title">💡 父母出行温馨贴士</span>
+        <ul style="margin:0; padding-left: 20px; color: #555;">
+            <li><strong>衣物：</strong>杭州湿冷，请务必穿舒适防滑的鞋子，带上帽子和轻羽绒背心。</li>
+            <li><strong>预约：</strong>灵隐飞来峰需提前7天在小程序预约，身份证务必随身携带。</li>
+            <li><strong>交通：</strong>尽量利用地铁+专线公交，春节期间景区打车非常困难。</li>
+        </ul>
+    </div>
+
+</div>
+
+<button class="action-btn no-print" onclick="window.print()">🖨️ 保存为 PDF</button>
+
+</body>
+</html>
